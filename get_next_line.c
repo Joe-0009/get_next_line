@@ -1,5 +1,5 @@
 #include "get_next_line.h"
-#define BUFFER_SIZE 13
+
 
 void	ft_free(char *buffer)
 {
@@ -58,8 +58,10 @@ char *get_line(int fd, char *rbuf)
     while (1)
     {
         return_bytes = read(fd, buffer, BUFFER_SIZE);
-        if (return_bytes <= 0)
+        if (return_bytes < 0)
             return (ft_free(buffer), ft_free(rbuf), NULL);
+        if (return_bytes == 0)
+            break ;
         buffer[return_bytes] = '\0';
         rbuf = ft_strjoin(rbuf, buffer);
         if (!rbuf)
@@ -91,25 +93,3 @@ char *get_next_line(int fd)
     return (line);
 }
 
-#include <fcntl.h>
-int main()
-{
-    int fd = open("txt", O_RDONLY);
-    if (fd < 0)
-    {
-        perror("Error opening file");
-        return (1);
-    }
-    char *str;
-    str = get_next_line(fd);
-    printf("%s", str);
-    str = get_next_line(fd);
-    printf("%s", str);
-    str = get_next_line(fd);
-    printf("%s", str);
-    str = get_next_line(fd);
-    printf("%s", str);
-    str = get_next_line(fd);
-    printf("%s", str);
-    return (0);
-}

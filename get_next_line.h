@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <limits.h>
-
 #include <stdio.h>
+
+#define BUFFER_SIZE 3
 /* get_next_line_utils.c */
 size_t ft_strlen(const char *str);
 char *ft_strdup(char *str);
